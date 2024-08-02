@@ -40,7 +40,11 @@ INSTALLED_APPS = [
     #my app
     'User',
     'main',
-    "products"
+    "products" ,
+    #API
+    'apiApp',
+    #restframework
+    'rest_framework',
 ]
 AUTH_USER_MODEL = 'User.customUser'
 MIDDLEWARE = [
