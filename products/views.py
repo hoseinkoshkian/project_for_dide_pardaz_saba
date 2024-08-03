@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.views import View
 from products.forms import ProductForm
 from .models import mobile
-
+from django.db.models import F
 class ProcutsView(View):
     form = ProductForm()
     def get(self, request, *args, **kwargs):
@@ -24,8 +24,9 @@ class ProcutsView(View):
 class Products_list_filter_View(View):
     def post(self, request, *args, **kwargs):
         filter_data = request.POST['searchByName']
+        if (request.POST.get('id_checkbox') == "on"):
+            matching_mobiles = mobile.objects.filter(manufacturingCountry=F('brand__country'))
+            return render(request, 'search.html', {'productlist': matching_mobiles })
 
-        print( request.POST)
         productlist = mobile.objects.filter(modelName__contains=filter_data)
-        print(productlist)
         return render(request , 'search.html' , {'productlist': productlist})
